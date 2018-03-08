@@ -36,6 +36,7 @@ RSpec.describe 'Notifications API', type: :request do
         post '/notifications', params: no_device, headers: auth_headers
         expect(response).to have_http_status(:unprocessable_entity)
         
+        # for device_id I could get the id of the last notification and add 1.
         wrong_device_id = { message: 'Learn Elm', device_id: 999 }
         post '/notifications', params: wrong_device_id, headers: auth_headers
         expect(response).to have_http_status(:unprocessable_entity)
@@ -43,6 +44,29 @@ RSpec.describe 'Notifications API', type: :request do
       end
     
     end
+  end
+  
+  describe 'GET /notifications' do
+    context 'when the request is valid' do
+    
+      let!(:notifications) { create_list(:notification, 10, user: user, device: device) }
+  
+      it 'returns all the notifications' do
+        
+        auth_headers = user.create_new_auth_token
+        get '/notifications', params: {}, headers: auth_headers
+        expect(response_json.size).to eq(10)
+        expect(response).to have_http_status(:ok)
+      end
+    end
+    
+    context 'when the request is invalid' do
+      it 'doesnt get notifications if user is not authenticated' do
+        get '/notifications'
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  
   end
   
 end

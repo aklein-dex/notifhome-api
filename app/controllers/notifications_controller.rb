@@ -1,5 +1,5 @@
 class NotificationsController < ApplicationController
-  before_action :authenticate_user!, except: [ :index ]
+  before_action :authenticate_user!
   
   def index
     @notifications = Notification.all()
@@ -8,7 +8,7 @@ class NotificationsController < ApplicationController
   
   def create
     # create! will raise an exception if notification is not valid.
-    # The exception is then catched by ExceptionHandler (included in ApplicationController)
+    # The exception is then catched by the concern ExceptionHandler (included in ApplicationController)
     @notification = Notification.create!(
       message: params[:message],
       user: @current_user,
@@ -16,5 +16,8 @@ class NotificationsController < ApplicationController
       )
     json_response @notification, :created
   end
+  
+  private
+  # todo allow params
 
 end

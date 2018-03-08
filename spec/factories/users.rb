@@ -12,4 +12,15 @@ FactoryBot.define do
     created_at   { timestamp }
     updated_at   { timestamp }
   end
+  
+  factory :userx do
+    uid { email }
+    name { Faker::Name.name }
+    email { email }
+    encrypted_password { User.new.send(:password_digest, 'secret123') }
+    password { User.new.send(:password_digest, 'secret123') }
+    provider 'email'
+    created_at   { timestamp }
+    updated_at   { timestamp }
+  end
 end
