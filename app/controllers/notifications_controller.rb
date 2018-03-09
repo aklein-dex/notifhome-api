@@ -17,7 +17,7 @@ class NotificationsController < ApplicationController
     json_response @notification, :created
   end
   
-  private
-  # todo allow params
 
+  private
+  
 end
