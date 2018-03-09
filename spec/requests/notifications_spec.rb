@@ -7,7 +7,7 @@ RSpec.describe 'Notifications API', type: :request do
   
   describe 'POST /notifications' do
     
-    let(:valid_attributes) { { message: 'Learn Elm', device_id: device.id } }
+    let(:valid_attributes) { { notification: { message: 'Learn Elm', device_id: device.id } } }
 
     context 'when the request is valid' do
       it 'creates a notification' do
@@ -28,16 +28,16 @@ RSpec.describe 'Notifications API', type: :request do
       it 'doesnt create a notification if attributes are not valid' do
         auth_headers = user.create_new_auth_token
         
-        no_message = { device_id: device.id }
+        no_message = { notification: { device_id: device.id } }
         post '/notifications', params: no_message, headers: auth_headers
         expect(response).to have_http_status(:unprocessable_entity)
         
-        no_device = { message: 'Learn Elm' }
+        no_device = { notification: {message: 'Learn Elm' } }
         post '/notifications', params: no_device, headers: auth_headers
         expect(response).to have_http_status(:unprocessable_entity)
         
         # for device_id I could get the id of the last notification and add 1.
-        wrong_device_id = { message: 'Learn Elm', device_id: 999 }
+        wrong_device_id = { notification: {message: 'Learn Elm', device_id: 999 } }
         post '/notifications', params: wrong_device_id, headers: auth_headers
         expect(response).to have_http_status(:unprocessable_entity)
         

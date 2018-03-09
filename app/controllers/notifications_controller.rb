@@ -7,17 +7,20 @@ class NotificationsController < ApplicationController
   end
   
   def create
-    # create! will raise an exception if notification is not valid.
+    # save! will raise an exception if notification is not valid.
     # The exception is then catched by the concern ExceptionHandler (included in ApplicationController)
-    @notification = Notification.create!(
-      message: params[:message],
-      user: @current_user,
-      device_id: params[:device_id]
-      )
+    @notification = Notification.new(notification_params)
+    @notification.user = @current_user
+    @notification.save!
     json_response @notification, :created
   end
   
 
   private
+  
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def notification_params
+    params.fetch(:notification, {}).permit(:message, :device_id)
+  end
   
 end
