@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   
   resources :notifications, only: [:index, :create]
   
-  resources :devices, only: [:show, :update, :create, :destroy]
+  resources :devices, only: [:index, :show, :update, :create, :destroy]
   
   namespace :device do
     resources :notifications, only: [:index]

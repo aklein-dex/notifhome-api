@@ -5,6 +5,28 @@ RSpec.describe 'Devices API', type: :request do
   let(:user) { create(:user) }
   let(:device) { create(:device) }
   
+  describe 'GET /devices' do
+    
+    let!(:devices) { create_list(:device, 10) }
+  
+    context 'when the request is valid' do
+      it 'get all devices' do
+        auth_headers = user.create_new_auth_token
+        
+        get '/devices', params: {}, headers: auth_headers
+        expect(response_json.size).to eq(10)
+        expect(response).to have_http_status(:ok)
+      end
+    end
+    
+    context 'when the request is invalid' do
+      it 'doesnt get devices if user is not authenticated' do
+        get '/devices'
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+  
+  end
   
   describe 'POST /devices' do
     

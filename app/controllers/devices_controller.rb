@@ -2,6 +2,11 @@ class DevicesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_device, only: [:show, :update, :destroy]
   
+  def index
+    @devices = Device.all
+    json_response @devices
+  end
+  
   def show
     json_response @device
   end
