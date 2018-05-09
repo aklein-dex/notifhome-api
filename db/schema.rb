@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20180304094141) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.text "message"
+    t.text "message", null: false
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -51,7 +51,6 @@ ActiveRecord::Schema.define(version: 20180304094141) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
-    t.index [nil], name: "index_users_on_confirmation_token", unique: true
   end
 
 end
