@@ -4,11 +4,11 @@ class DevicesController < ApplicationController
   
   def index
     @devices = Device.all
-    json_response @devices
+    render json: {"devices": @devices}, status: :ok
   end
   
   def show
-    json_response @device
+    render json: {"device": @device}, status: :ok
   end
   
   def update
@@ -19,13 +19,14 @@ class DevicesController < ApplicationController
     end
     
     @device.save!
-    json_response @device
+    render json: {"device": @device}, status: :ok
   end
   
   def create
+    puts device_params
     @device = Device.new(device_params)
     @device.save!
-    json_response @device, :created
+    render json: {"device": @device}, status: :created
   end
   
   def destroy
@@ -41,7 +42,7 @@ class DevicesController < ApplicationController
   
   # Never trust parameters from the scary internet, only allow the white list through.
   def device_params
-    params.fetch(:device, {}).permit(:name)
+    params.permit(:name)
   end
   
 end
