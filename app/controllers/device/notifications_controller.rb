@@ -7,7 +7,7 @@ class Device::NotificationsController < ApplicationController
     @notifications = Notification.created_after(@device.last_request_at)
     @device.set_last_request_at
     @device.save!
-    render json: @notifications
+    render json: {"notifications": @notifications}, status: :ok
   end
   
   # todo: when the user press the button on the omega board (meaning he read the

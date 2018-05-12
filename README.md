@@ -132,7 +132,7 @@ token-type
 
 ### POST /devices
 
-Create a device.
+Create a device. In the first version of this API, you can create only 1 device.
 
 #### Request
 ##### Headers
@@ -231,14 +231,12 @@ uid
 Get all the notifications.
 
 #### Headers
-
 * access-token
 * client
 * expiry
 * uid
 * token-type
 
-#### Parameters
 #### Response
 ##### Headers
 ````
@@ -246,6 +244,29 @@ access-token
 client
 expiry
 uid
+````
+##### Body
+````
+{
+    "notifications": [
+        {
+            "id": 1,
+            "message": "hello you",
+            "user_id": 2,
+            "created_at": "2018-05-12T09:54:56.137Z",
+            "updated_at": "2018-05-12T09:54:56.137Z",
+            "device_id": null
+        },
+        {
+            "id": 2,
+            "message": "hello you",
+            "user_id": 2,
+            "created_at": "2018-05-12T09:56:42.804Z",
+            "updated_at": "2018-05-12T09:56:42.804Z",
+            "device_id": null
+        }
+    ]
+}
 ````
 
 ### POST /notifications
@@ -260,6 +281,8 @@ Create a notification.
 * uid
 
 #### Parameters
+* message
+
 #### Response
 ##### Headers
 ````
@@ -268,14 +291,48 @@ client
 expiry
 uid
 ````
+##### Body
+````
+{
+    "notification": {
+        "id": 2,
+        "message": "hello you",
+        "user_id": 2,
+        "created_at": "2018-05-12T09:56:42.804Z",
+        "updated_at": "2018-05-12T09:56:42.804Z",
+        "device_id": null
+    }
+}
+````
 
 ### GET /device/notification
 
-Get the notification for the device (accessible only for a device).
+Get the new notifications since the last request (request sent from a device).
 
 #### Headers
+* access-token (device)
 
-* access-token
-
-#### Parameters
 #### Response
+##### Body
+````
+{
+    "notifications": [
+        {
+            "id": 1,
+            "message": "hello you",
+            "user_id": 2,
+            "created_at": "2018-05-12T09:54:56.137Z",
+            "updated_at": "2018-05-12T09:54:56.137Z",
+            "device_id": null
+        },
+        {
+            "id": 2,
+            "message": "hello you",
+            "user_id": 2,
+            "created_at": "2018-05-12T09:56:42.804Z",
+            "updated_at": "2018-05-12T09:56:42.804Z",
+            "device_id": null
+        }
+    ]
+}
+````

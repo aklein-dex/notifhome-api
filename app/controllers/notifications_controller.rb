@@ -3,7 +3,7 @@ class NotificationsController < ApplicationController
   
   def index
     @notifications = Notification.all()
-    json_response @notifications
+    render json: {"notifications": @notifications}, status: :ok
   end
   
   def create
@@ -12,7 +12,7 @@ class NotificationsController < ApplicationController
     @notification = Notification.new(notification_params)
     @notification.user = @current_user
     @notification.save!
-    json_response @notification, :created
+    render json: {"notification": @notification}, status: :created
   end
   
 
@@ -20,7 +20,7 @@ class NotificationsController < ApplicationController
   
   # Never trust parameters from the scary internet, only allow the white list through.
   def notification_params
-    params.permit(:message, :device_id)
+    params.permit(:message)
   end
   
 end

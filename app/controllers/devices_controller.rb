@@ -22,10 +22,13 @@ class DevicesController < ApplicationController
     render json: {"device": @device}, status: :ok
   end
   
+  # So far, we allow just 1 device to be created.
   def create
-    puts device_params
-    @device = Device.new(device_params)
-    @device.save!
+    @device = Device.first
+    if @device == nil
+      @device = Device.new(device_params)
+      @device.save!
+    end
     render json: {"device": @device}, status: :created
   end
   
