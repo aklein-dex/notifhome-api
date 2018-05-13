@@ -2,11 +2,13 @@
 
 Notifhome-api is the API for the Notifhome project.
 
-The Notifhome project is divided into 3 projects:
+Notifhome is divided into 3 projects:
 
 - Notifhome-api (this project)
 - Notifhome-frontend (todo)
 - Notifhome-omega2 (todo)
+
+![Notifhome Projects](https://www.dropbox.com/s/t86yaat1flokwju/notifhome.png?raw=1)
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
